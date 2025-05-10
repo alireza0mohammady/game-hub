@@ -1,1 +1,11 @@
 @import "tailwindcss";
+
+@layer base {
+  body {
+    @apply text-gray-300 bg-almostBlack;
+  }
+}
+
+@theme {
+  --color-almostBlack: #151515;
+}
