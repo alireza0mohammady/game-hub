@@ -1,8 +1,10 @@
 @import "tailwindcss";
+@import "tailwindcss-animated";
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   body {
-    @apply text-gray-300 bg-almostBlack;
+    @apply text-gray-300 dark:bg-almostBlack bg-gray-100;
   }
 }
 

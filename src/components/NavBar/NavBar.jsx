@@ -1,17 +1,8 @@
-import { GiEvilMoon } from "react-icons/gi";
-import { FaSun } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
-
-import { useState } from "react";
 import logo from "../../assets/comi-cog.png";
-const NavBar = () => {
-  const [themeMode, setThemeMode] = useState("dark");
-  function toggleThemeMode() {
-    if (themeMode === "dark") {
-      setThemeMode("light");
-    } else setThemeMode("dark");
-  }
+import DarkModeButton from "./DarkModeButton";
 
+const NavBar = () => {
   return (
     <nav className="flex gap-6 items-center px-4 py-4">
       <section className="min-w-8">
@@ -26,12 +17,7 @@ const NavBar = () => {
         />
       </section>
       <section className="">
-        <button
-          onClick={toggleThemeMode}
-          className={`${themeMode === "light" ? "bg-gray-300 text-gray-700 " : "bg-gray-700 text-gray-300 "}rounded-full flex items-center justify-center text-2xl p-1`}
-        >
-          {themeMode === "dark" ? <FaSun /> : <GiEvilMoon />}
-        </button>
+        <DarkModeButton />
       </section>
     </nav>
   );
