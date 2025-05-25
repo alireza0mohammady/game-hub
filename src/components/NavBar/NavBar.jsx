@@ -8,11 +8,11 @@ const NavBar = () => {
       <section className="min-w-8">
         <img src={logo} alt="" className="w-8 lg:w-11" />
       </section>
-      <section className="flex items-center justify-start gap-0.5 bg-gray-50 px-4 py-1 lg:py-2 grow rounded-full text-gray-700">
+      <section className="flex items-center justify-start gap-0.5 bg-white/15 px-4 py-1 lg:py-2 grow rounded-full text-white/60 has-focuse:bg-red-200">
         <IoSearch className="text-lg" />
         <input
           type="text"
-          className=" focus:outline-0 lg:text-lg lg:ml-2 focus:border-0 placeholder:text-gray-500 caret-gray-500 w-5/6"
+          className=" focus:outline-0 lg:text-lg lg:ml-2 focus:border-0 caret-gray-500 w-5/6"
           placeholder="search game name"
         />
       </section>
