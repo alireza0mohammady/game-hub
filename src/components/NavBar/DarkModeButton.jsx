@@ -31,9 +31,9 @@ const DarkModeButton = () => {
       className={`${themeMode === "light" ? "bg-gray-700 text-gray-300 " : "bg-gray-300 text-gray-700 "}rounded-full flex items-center justify-center text-2xl p-1`}
     >
       {themeMode === "dark" ? (
-        <FaSun className="animate-fade animate-once" />
+        <FaSun className="animate-pulse animate-once" />
       ) : (
-        <GiEvilMoon className="animate-fade animate-once" />
+        <GiEvilMoon className="animate-pulse animate-once" />
       )}
     </button>
   );
