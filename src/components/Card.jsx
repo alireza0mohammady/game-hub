@@ -29,7 +29,7 @@ const Card = (props) => {
   });
 
   function metaColor() {
-    if (!meta) return "";
+    if (!meta) return "hidden";
     if (meta >= 80) return "text-green-500 border-green-500/40";
     if (meta >= 60) return "text-yellow-500 border-yellow-500/40";
     return "text-red-500 border-red-500/40";
@@ -39,7 +39,7 @@ const Card = (props) => {
     <div>
       <section className="dark:bg-dark-secondery shadow-md rounded-xl overflow-hidden flex flex-col gap-3 dark:text-gray-50">
         <section>
-          <img src={getCropedImageUrl(img)} alt="" />
+          <img src={img ? getCropedImageUrl(img) : null} alt="" />
         </section>
         <section className="p-4 flex flex-col gap-1">
           <div className="flex justify-between items-center gap-2">
