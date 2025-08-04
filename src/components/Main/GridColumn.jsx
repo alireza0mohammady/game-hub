@@ -11,6 +11,7 @@ const GridColumn = (props) => {
             platforms={game.parent_platforms}
             img={game.background_image}
             meta={game.metacritic}
+            rating_top={game.rating_top}
           ></Card>
         );
       })}
