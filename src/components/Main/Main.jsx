@@ -1,18 +1,13 @@
 import { useEffect, useState } from "react";
-import gameApi from "../../services/games-api";
 import GridSection from "./GridSection";
 import GamesGridSkeleton from "./GamesGridSkeleton";
 import PlatformSelector from "./PlatformSelector";
 import SortSelector from "./SortSelector";
+import useGamesQuery from "../../services/useGamesQuery";
 
 const Main = (props) => {
-  const { selectedGenre } = props;
-  const [selectedSortMethod, setSelectedSortMethod] = useState(null);
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { gameQuery, setSelectedPlatform, setSortingMethod } = props;
   const [gridCols, setGridCols] = useState(null);
-  const [selectedPlatform, setSelectedPlatform] = useState(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,31 +27,7 @@ const Main = (props) => {
     };
   }, []);
 
-  useEffect(() => {
-    setLoading(true);
-    console.log(selectedSortMethod);
-    const { request, cancel } = gameApi.get({
-      ...(selectedSortMethod ? { ordering: selectedSortMethod.id } : {}),
-      ...(selectedGenre ? { genres: selectedGenre } : {}),
-      ...(selectedPlatform
-        ? { parent_platforms: selectedPlatform.id.toString() }
-        : {}),
-    });
-    request
-      .then((res) => {
-        console.log(res.data);
-        setLoading(false);
-        setResult(res.data.results);
-      })
-      .catch((error) => {
-        setLoading(false);
-        if (error.name === "CanceledError") return;
-        setError(error);
-      });
-    return () => {
-      cancel();
-    };
-  }, [selectedGenre, selectedPlatform, selectedSortMethod]);
+  const { data, error, isLoading, fetchNextPage } = useGamesQuery(gameQuery);
 
   function mainDynamicGridClass() {
     if (gridCols === 1) {
@@ -74,16 +45,25 @@ const Main = (props) => {
   }
 
   return (
-    <main className="lg:w-6/7 ">
+    <main className="lg:w-5/6 ">
       <section>
-        <PlatformSelector
-          selectedPlatform={selectedPlatform}
-          setSelectedPlatform={setSelectedPlatform}
-        />
-        <SortSelector
-          selectedSortMethod={selectedSortMethod}
-          setSelectedSortMethod={setSelectedSortMethod}
-        />
+        <h2 className="text-3xl font-black">
+          <span>
+            {gameQuery.platforms ? gameQuery.platforms.name + " " : ""}
+          </span>
+          <span>{gameQuery.genres ? gameQuery.genres.name + " " : ""}</span>
+          Games
+        </h2>
+        <section className="flex gap-3">
+          <PlatformSelector
+            selectedPlatform={gameQuery.platforms}
+            setSelectedPlatform={setSelectedPlatform}
+          />
+          <SortSelector
+            selectedSortMethod={gameQuery.ordering}
+            setSelectedSortMethod={setSortingMethod}
+          />
+        </section>
       </section>
       <section
         className={
@@ -91,12 +71,10 @@ const Main = (props) => {
           " grid gap-x-2.5 md:gap-x-5 px-2.5 py-2.5 items-start"
         }
       >
-        {error ? error.message : ""}
-        {result && !loading ? (
-          <GridSection result={result} gridCols={gridCols} />
-        ) : (
-          <GamesGridSkeleton />
-        )}
+        <button type="" onClick={fetchNextPage}></button>
+        {error ? error.message : <></>}
+        {isLoading ? <GamesGridSkeleton /> : <></>}
+        {data ? <GridSection result={data} gridCols={gridCols} /> : <></>}
       </section>
     </main>
   );
