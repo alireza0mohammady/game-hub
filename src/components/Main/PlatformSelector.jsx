@@ -1,32 +1,24 @@
-import { useEffect } from "react";
 import DropDown from "../DropDown";
-import { useState } from "react";
-import PlatformsApi from "../../services/platforms-api";
+import usePlatformsQuery from "../../services/usePlatformQuery";
+
 const PlatformSelector = (props) => {
   const { selectedPlatform, setSelectedPlatform } = props;
-  const [platforms, setPlatforms] = useState([]);
-  useEffect(() => {
-    const { request, cancel } = PlatformsApi.get();
-    request
-      .then((res) => {
-        setPlatforms(res.data.results);
-      })
-      .then((error) => {
-        console.log("error in platformSelector");
-      });
-    return () => {
-      cancel();
-    };
-  }, []);
+
+  const { data, error } = usePlatformsQuery();
 
   return (
     <>
-      <DropDown
-        placeHolder="select platform"
-        options={platforms}
-        selectedOption={selectedPlatform}
-        setOption={setSelectedPlatform}
-      ></DropDown>
+      {error ? "error" : ""}
+      {data ? (
+        <DropDown
+          placeHolder="select platform"
+          options={data}
+          selectedOption={selectedPlatform}
+          setOption={setSelectedPlatform}
+        ></DropDown>
+      ) : (
+        ""
+      )}
     </>
   );
 };
