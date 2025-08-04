@@ -9,9 +9,10 @@ import {
   FaAndroid,
 } from "react-icons/fa6";
 import getCropedImageUrl from "../services/img-url";
+import CardEmoji from "./Main/CardEmoji";
 
 const Card = (props) => {
-  const { name, img, platforms, meta } = props;
+  const { name, img, platforms, meta, rating_top } = props;
 
   const platformsLogos = platforms.map((item) => {
     if (item.platform.slug == "pc") return <FaWindows key={item.platform.id} />;
@@ -39,7 +40,11 @@ const Card = (props) => {
     <div>
       <section className="dark:bg-dark-secondery shadow-md rounded-xl overflow-hidden flex flex-col gap-3 dark:text-gray-50">
         <section>
-          <img src={img ? getCropedImageUrl(img) : null} alt="" />
+          <img
+            src={img ? getCropedImageUrl(img) : null}
+            alt=""
+            className="w-full"
+          />
         </section>
         <section className="p-4 flex flex-col gap-1">
           <div className="flex justify-between items-center gap-2">
@@ -49,6 +54,7 @@ const Card = (props) => {
             </div>
           </div>
           <div className="font-bold text-2xl">{name}</div>
+          <CardEmoji rating_top={rating_top} />
         </section>
       </section>
     </div>
