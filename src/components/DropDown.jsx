@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { TbChevronDown } from "react-icons/tb";
 
 const DropDown = (props) => {
   const { placeHolder, options, selectedOption, setOption } = props;
@@ -6,17 +7,22 @@ const DropDown = (props) => {
   return (
     <div>
       <div>
-        <p
+        <div
           onClick={() => {
             setShow(!show);
           }}
+          className="bg-white/10 rounded-lg px-4.5 py-1.5 font-semibold flex
+          items-center gap-x-2 transition-all cursor-pointer"
         >
-          {selectedOption ? selectedOption.name : placeHolder}
-        </p>
+          <div>{selectedOption ? selectedOption.name : placeHolder}</div>
+          <div>
+            <TbChevronDown />
+          </div>
+        </div>
         <div className="relative">
           <div
             className={
-              show ? "absolute bg-dark-secondery rounded-lg" : "hidden"
+              show ? "absolute bg-dark-secondery rounded-lg mt-2" : "hidden"
             }
           >
             {options.map((i) => {
