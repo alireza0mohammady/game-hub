@@ -1,18 +1,21 @@
 import { useRef } from "react";
 import { IoSearch } from "react-icons/io5";
 
-const SearchBar = () => {
+const SearchBar = (props) => {
+  const { setSearch } = props;
   const searchRef = useRef(null);
 
   function handleSubmit(event) {
     event.preventDefault();
     console.log(searchRef.current.value);
+    setSearch(searchRef.current.value);
   }
 
   return (
     <form
       onSubmit={(event) => handleSubmit(event)}
-      className="flex items-center justify-start gap-0.5 bg-white/15 px-4 py-1 lg:py-2 grow rounded-full text-white/60 has-focuse:bg-red-200"
+      className="flex items-center justify-start gap-0.5 bg-white/15 px-4 py-1 lg:py-2 grow
+      rounded-full text-white/60 has-focuse:bg-red-200"
     >
       <IoSearch className="text-lg" />
       <input
